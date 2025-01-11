@@ -1,16 +1,12 @@
 package result.agency.result_agency_intern.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import result.agency.result_agency_intern.bot.enums.BotState;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -18,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Setter
+@Getter
 @SuperBuilder
 @Table(name = "users")
 public class User extends BaseEntity implements UserDetails {
@@ -25,7 +22,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private String fullName;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String phoneNumber;
 
     private String password;
@@ -35,6 +32,9 @@ public class User extends BaseEntity implements UserDetails {
     private Role role;
 
     private Long chatId;
+
+    @Enumerated(EnumType.STRING)
+    private BotState state;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -52,4 +52,7 @@ public class User extends BaseEntity implements UserDetails {
     }
 
 
+    public boolean checkState(BotState botState) {
+        return this.state == botState;
+    }
 }
