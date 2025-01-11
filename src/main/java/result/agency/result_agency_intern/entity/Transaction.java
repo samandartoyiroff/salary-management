@@ -26,8 +26,8 @@ public class Transaction extends BaseEntity{
 
     private Double amount;
 
-    @Enumerated(EnumType.STRING)
-    private OutcomeType outcomeType; // Agar xarajat tanlangan bo'lsa
+    @ManyToOne
+    private OutcomeName outcomeName; // Agar xarajat tanlangan bo'lsa
 
     @ManyToOne
     private Client client; // Agar daromad tanlangan bo'lsa

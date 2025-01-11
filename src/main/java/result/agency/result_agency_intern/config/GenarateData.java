@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import result.agency.result_agency_intern.entity.OutcomeName;
 import result.agency.result_agency_intern.entity.Role;
 import result.agency.result_agency_intern.entity.ServiceName;
 import result.agency.result_agency_intern.entity.User;
 import result.agency.result_agency_intern.entity.enums.RoleName;
+import result.agency.result_agency_intern.repository.OutcomeNameRepository;
 import result.agency.result_agency_intern.repository.RoleRepository;
 import result.agency.result_agency_intern.repository.ServiceNameRepository;
 import result.agency.result_agency_intern.repository.UserRepository;
@@ -28,6 +30,8 @@ public class GenarateData implements CommandLineRunner {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private OutcomeNameRepository outcomeNameRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -98,6 +102,56 @@ public class GenarateData implements CommandLineRunner {
                     .build();
 
             userRepository.save(admin);
+
+
+            OutcomeName outcomeName1 = OutcomeName.builder()
+                    .name("Oylik")
+                    .build();
+            OutcomeName outcomeName2 = OutcomeName.builder()
+                    .name("Divedend")
+                    .build();
+            OutcomeName outcomeName3 = OutcomeName.builder()
+                    .name("Reklama")
+                    .build();
+            OutcomeName outcomeName4 = OutcomeName.builder()
+                    .name("Mijoz reklamasi")
+                    .build();
+            OutcomeName outcomeName5 = OutcomeName.builder()
+                    .name("Taraqqiyot jamg'armasi")
+                    .build();
+            OutcomeName outcomeName6 = OutcomeName.builder()
+                    .name("Fiskal xarajatlar")
+                    .build();
+            OutcomeName outcomeName7 = OutcomeName.builder()
+                    .name("Maishiy xarajatlar")
+                    .build();
+            OutcomeName outcomeName8 = OutcomeName.builder()
+                    .name("Xizmatlar")
+                    .build();
+            OutcomeName outcomeName9 = OutcomeName.builder()
+                    .name("Kasaba uyishmasi")
+                    .build();
+            OutcomeName outcomeName10 = OutcomeName.builder()
+                    .name("Komissiya haqqi")
+                    .build();
+             OutcomeName outcomeName11 = OutcomeName.builder()
+                    .name("Boshqa")
+                    .build();
+
+             outcomeNameRepository.save(outcomeName1);
+             outcomeNameRepository.save(outcomeName2);
+             outcomeNameRepository.save(outcomeName3);
+             outcomeNameRepository.save(outcomeName4);
+             outcomeNameRepository.save(outcomeName5);
+             outcomeNameRepository.save(outcomeName6);
+             outcomeNameRepository.save(outcomeName7);
+             outcomeNameRepository.save(outcomeName8);
+             outcomeNameRepository.save(outcomeName9);
+             outcomeNameRepository.save(outcomeName10);
+             outcomeNameRepository.save(outcomeName11);
+
+
+
 
         }
 
