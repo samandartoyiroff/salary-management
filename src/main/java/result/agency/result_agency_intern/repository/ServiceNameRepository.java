@@ -16,4 +16,7 @@ public interface ServiceNameRepository extends JpaRepository<ServiceName, Long> 
     List<ServiceName> findAllNotDeleted();
 
     Optional<ServiceName> findByIdAndDeletedFalse(Long id);
+
+    List<ServiceName> findAllByDeletedFalse();
+
 }

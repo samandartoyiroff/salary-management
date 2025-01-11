@@ -14,10 +14,8 @@ import result.agency.result_agency_intern.dto.TransactionTypeReportDTO;
 import result.agency.result_agency_intern.repository.TransactionRepository;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -54,7 +52,7 @@ public class ReportService {
             Cell cell1 = row.createCell(0);
             cell1.setCellValue(reportDTO.getMonth());
             Cell cell2 = row.createCell(1);
-            cell2.setCellValue(reportDTO.getIncome()); // Assuming income is a BigDecimal or similar
+            cell2.setCellValue(reportDTO.getIncome()+" so'm"); // Assuming income is a BigDecimal or similar
         }
 
         // Auto-size columns
@@ -100,7 +98,7 @@ public class ReportService {
             Cell cell1 = row.createCell(0);
             cell1.setCellValue(reportDTO.getMonth());
             Cell cell2 = row.createCell(1);
-            cell2.setCellValue(reportDTO.getOutcome()); // Assuming income is a BigDecimal or similar
+            cell2.setCellValue(reportDTO.getOutcome()+" so'm"); // Assuming income is a BigDecimal or similar
         }
         // Auto-size columns
         sheet.autoSizeColumn(0);
@@ -137,7 +135,7 @@ public class ReportService {
             Cell cell1 = row.createCell(0);
             cell1.setCellValue(reportDTO.getTransactionType());
             Cell cell2 = row.createCell(1);
-            cell2.setCellValue(reportDTO.getAmount());
+            cell2.setCellValue(reportDTO.getAmount()+"so'm");
         }
         sheet.autoSizeColumn(1);
         try (FileOutputStream fos = new FileOutputStream(file)) {
@@ -171,7 +169,7 @@ public class ReportService {
             Cell cell1 = row.createCell(0);
             cell1.setCellValue(reportDTO.getPayType());
             Cell cell2 = row.createCell(1);
-            cell2.setCellValue(reportDTO.getAmount());
+            cell2.setCellValue(reportDTO.getAmount() + "so'm");
         }
         sheet.autoSizeColumn(1);
         try (FileOutputStream fos = new FileOutputStream(file)) {

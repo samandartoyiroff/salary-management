@@ -1,19 +1,20 @@
 package result.agency.result_agency_intern.config;
 
+import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import result.agency.result_agency_intern.entity.OutcomeName;
-import result.agency.result_agency_intern.entity.Role;
-import result.agency.result_agency_intern.entity.ServiceName;
-import result.agency.result_agency_intern.entity.User;
+import result.agency.result_agency_intern.entity.*;
+import result.agency.result_agency_intern.entity.enums.PayType;
 import result.agency.result_agency_intern.entity.enums.RoleName;
-import result.agency.result_agency_intern.repository.OutcomeNameRepository;
-import result.agency.result_agency_intern.repository.RoleRepository;
-import result.agency.result_agency_intern.repository.ServiceNameRepository;
-import result.agency.result_agency_intern.repository.UserRepository;
+import result.agency.result_agency_intern.entity.enums.TransactionCondition;
+import result.agency.result_agency_intern.entity.enums.TransactionType;
+import result.agency.result_agency_intern.repository.*;
+
+import java.util.List;
+import java.util.Random;
 
 @Service
 public class GenarateData implements CommandLineRunner {
@@ -32,6 +33,10 @@ public class GenarateData implements CommandLineRunner {
     private UserRepository userRepository;
     @Autowired
     private OutcomeNameRepository outcomeNameRepository;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -98,7 +103,7 @@ public class GenarateData implements CommandLineRunner {
                     .username("admin")
                     .password(passwordEncoder.encode("1234"))
                     .fullName("Ali Valiyev")
-                    .phoneNumber("912392309")
+                    .phoneNumber("912392304")
                     .build();
 
             userRepository.save(admin);
@@ -150,8 +155,99 @@ public class GenarateData implements CommandLineRunner {
              outcomeNameRepository.save(outcomeName10);
              outcomeNameRepository.save(outcomeName11);
 
+             User user = User.builder()
+                     .role(role1)
+                     .username("user")
+                     .password(passwordEncoder.encode("1234"))
+                     .fullName("Ali Valiyev")
+                     .phoneNumber("912392309")
+                     .build();
+             userRepository.save(user);
+
+            Faker faker = new Faker();
+            List<ServiceName> serviceNames = serviceNameRepository.findAllByDeletedFalse();
+            Random random = new Random();
+
+            for (int i = 0; i < 10; i++) {
+
+                Client client = Client.builder()
+                        .fullName(faker.name().fullName())
+                        .phoneNumber(faker.phoneNumber().phoneNumber())
+                        .serviceName(serviceNames.get( random.nextInt(0,serviceNames.size()-1) ))
+                        .build();
+                clientRepository.save(client);
+
+            }
+
+            List<Client> clients = clientRepository.findAllByDeletedFalse();
+
+            Transaction transaction1 = Transaction.builder()
+                    .amount(123330.33)
+                    .description("ien ein")
+                    .payType(PayType.CASH_CURRENCY)
+                    .transactionType(TransactionType.KOCHIRISH)
+                    .build();
+            transactionRepository.save(transaction1);
+
+            Transaction transaction2 = Transaction.builder()
+                    .amount(122323.23)
+                    .description("ien ein")
+                    .payType(PayType.CARD)
+                    .transactionType(TransactionType.KOCHIRISH)
+                    .build();
+            transactionRepository.save(transaction2);
+
+            Transaction transaction3 = Transaction.builder()
+                    .amount(122323.23)
+                    .description("tolov")
+                    .payType(PayType.CARD)
+                    .client(clients.get(4))
+                    .transactionCondition(TransactionCondition.MOLIYAVIY_QARZ)
+                    .transactionType(TransactionType.DAROMAD)
+                    .build();
+            transactionRepository.save(transaction3);
 
 
+            Transaction transaction4 = Transaction.builder()
+                    .amount(342323.23)
+                    .description("tolov")
+                    .payType(PayType.CARD)
+                    .client(clients.get(3))
+                    .transactionCondition(TransactionCondition.REJALASHTIRILGAN)
+                    .transactionType(TransactionType.DAROMAD)
+                    .build();
+            transactionRepository.save(transaction4);
+
+
+            Transaction transaction5 = Transaction.builder()
+                    .amount(109323.23)
+                    .description("tolov")
+                    .payType(PayType.BANK_TRANSFER)
+                    .client(clients.get(6))
+                    .transactionCondition(TransactionCondition.KEYIN_TOLOV)
+                    .transactionType(TransactionType.DAROMAD)
+                    .build();
+            transactionRepository.save(transaction5);
+
+
+
+            Transaction transaction6 = Transaction.builder()
+                    .amount(900330.33)
+                    .description("ien ein")
+                    .payType(PayType.CASH_CURRENCY)
+                    .transactionType(TransactionType.XARAJAT)
+                    .outcomeName(outcomeName7)
+                    .build();
+            transactionRepository.save(transaction6);
+
+            Transaction transaction7 = Transaction.builder()
+                    .amount(1900330.33)
+                    .description("fmoien vunwe weuenf")
+                    .payType(PayType.CASH)
+                    .transactionType(TransactionType.XARAJAT)
+                    .outcomeName(outcomeName3)
+                    .build();
+            transactionRepository.save(transaction7);
 
         }
 

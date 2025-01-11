@@ -32,13 +32,13 @@ public class JwtUtil {
 
 
 
-    // Access token 30 minut
+    // Access token 30 minute
     public String generateToken(String username) {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         return Jwts.builder()
                 .setSubject(username)
-                .setIssuer("mehrli_maktab_admin")
+                .setIssuer("result_agency_internship")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+1000*60*60*24*7))
                 .signWith(getSignKey())
@@ -68,7 +68,7 @@ public class JwtUtil {
         Claims claims = getClaims(token);
         String username = claims.getSubject();
         User byUsername = userRepository.findByUsername(username);
-        return null;
+        return List.of(byUsername.getRole());
     }
     private Claims getClaims(String token) {
         return Jwts.parserBuilder()

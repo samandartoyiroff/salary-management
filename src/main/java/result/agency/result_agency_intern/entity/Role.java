@@ -1,9 +1,6 @@
 package result.agency.result_agency_intern.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +15,12 @@ import result.agency.result_agency_intern.entity.enums.RoleName;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class Role extends BaseEntity implements GrantedAuthority{
+public class Role  implements GrantedAuthority{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private boolean deleted = false;
 
     @Enumerated(EnumType.STRING)
     private RoleName roleName;
